@@ -7,12 +7,14 @@ import chatexchange.events
 
 from sleekxmpp import ClientXMPP
 from sleekxmpp.exceptions import IqError, IqTimeout
+from bs4 import BeautifulSoup
 
 global config
 config = configparser.ConfigParser()
 config.read('xmppexchange.ini')
 
 class XMPPExchange(ClientXMPP):
+
     global relay
     relay = False
 
@@ -25,6 +27,12 @@ class XMPPExchange(ClientXMPP):
         self.received = set()
         self.presences_received = threading.Event()
 
+    def session_start(self, event):
+        self.send_presence()
+        self.get_roster()
+        self.presences_received.wait(5)
+        print ("Logged in to XMPP as "+self.boundjid.bare)
+
         host_id = config['stackexchange']['host']
         room_id = config['stackexchange']['room']
         email = config['stackexchange']['email']
@@ -34,17 +42,12 @@ class XMPPExchange(ClientXMPP):
         client.login(email, password)
         global me
         me = client.get_me()
+        print ("Logged in to StackExchange as "+me.name)
 
         global room
         room = client.get_room(room_id)
         room.join()
         room.watch(self.on_stack_message)
-
-    def session_start(self, event):
-        self.send_presence()
-        self.get_roster()
-        self.presences_received.wait(5)
-        print ("Logged in as "+self.boundjid.bare)
 
     def wait_for_presences(self, pres):
         self.received.add(pres['from'].bare)
@@ -59,8 +62,9 @@ class XMPPExchange(ClientXMPP):
     def on_stack_message(self, message, client):
         if not isinstance(message, chatexchange.events.MessagePosted):
             return
-        if self.relay == True and message.user is not me:
-            message_content = message.user.name + ": " + message.content
+        if ((self.relay == True) and (message.user is not me)) or (str("@"+me.name).lower() in message.content.lower()):
+            soup = BeautifulSoup(message.content, "html.parser")
+            message_content = message.user.name + ": " + soup.get_text()
             self.send_message(mto=config['xmppexchange']['allowedjid'], mbody=message_content, mtype='chat')
 
     def on_xmpp_message(self, msg):
