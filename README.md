@@ -1,9 +1,7 @@
 # XMPPExchange
 Connect to StackExchange Chat with XMPP/Jabber.
 
-![](https://s.ave.zone/517.PNG)
-
-![](https://s.ave.zone/4ce.png)
+![](https://s.ave.zone/dcf.PNG) ![](https://s.ave.zone/4ce.png)
 
 ## How to set it up
 - Install sleekxmpp. `pip3 install sleekxmpp`
