@@ -8,7 +8,7 @@ Connect to StackExchange Chat with XMPP/Jabber.
 ## How to set it up
 - Install sleekxmpp. `pip3 install sleekxmpp`
 - Clone https://github.com/Manishearth/ChatExchange somewhere.
-- cd into it and run make, it'll handle everything.
+- cd into it and run make, it'll handle everything. (well, you need to install `python3-dev` first, `apt install python3-dev`)
 - go back to `XMPPExchange` folder, rename `xmppexchange.ini.example` to `xmppexchange.ini`, fill in the required spots.
 - Run it. `python3 xmppexchange.py`
 
