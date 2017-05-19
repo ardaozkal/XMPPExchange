@@ -1,0 +1,12 @@
+[xmppexchange]
+allowedjid = example@conversations.im
+
+[xmpp]
+jid = examplebot@jabber.ccc.de
+password = hunter2
+
+[stackexchange]
+host = stackexchange.com
+room = 1
+email = example@gmail.com
+password = correcthorsebatterystaple
