@@ -1,6 +1,16 @@
 # XMPPExchange
 Connect to StackExchange Chat with XMPP/Jabber.
 
+## Notice: Moved
+
+This project was moved to gitlab and is being maintained there.
+
+This code here is not indicative of my programming abilities, as it is old and is not maintained.
+
+[New codebase (on Gitlab.com)](https://gitlab.com/aoz/XMPPExchange)
+
+---
+
 ![](https://s.ave.zone/dcf.PNG) ![](https://s.ave.zone/4ce.png)
 
 ## How to set it up
